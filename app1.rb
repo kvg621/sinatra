@@ -5,25 +5,33 @@ get '/' do
   erb :index
 end
 
+get '/aaa.txt' do
+  @file=[]
+  f=File.open "aaa.txt", 'r'
+  while line=f.gets do
+    @file << line.chomp
+  end
+  f.close
+  erb :txts
+end
+
 get '/contact' do
-  @title='contact'
-  @message='contact'
-  erb :message
+  under_construction
 end
 get '/faq' do
-  @title='faq'
-  @message='faq'
-  erb :message
+  under_construction
 end
 get '/something' do
-  @title='something'
-  @message='something'
-  erb :message
+  under_construction
 end
+
+
 post '/' do
   @name=params[:name]
   @pass=params[:pass]
-
+  f=File.open 'aaa.txt', 'a'
+  f.write "Name: #{@name} Password: #{@pass} \n"
+  f.close
   if @name=='admin' && @pass=='12345'
     erb :welcome
   else
@@ -31,4 +39,10 @@ post '/' do
     erb :index
   end
 
+end
+
+def under_construction
+  @title='Under construction'
+  @message='Страница в разработке'
+  erb :message
 end
